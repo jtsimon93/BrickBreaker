@@ -242,12 +242,9 @@ void GameManager::DrawInfo() const
 
 void GameManager::Reset()
 {
+    ball.Reset();
+    paddle.Reset();
     gameState.Reset();
-
-    // TODO: Reset the ball position
-
-    // Reset ball speed to 0 (not moving)
-    ball.SetSpeed({0.0f, 0.0f});
 
     isGameOver = false;
     isGamePaused = false;
