@@ -8,7 +8,7 @@ GameManager::GameManager()
       isGameWon(false),
       isGameReset(false)
 {
-    // Set initial paddle speed
+    // Set initial paddle speed TODO: check into this, could be handled in Paddle class?
     paddle.SetSpeed({7.0f, 0.0f});
     InitializeBricks();
 }
@@ -156,7 +156,6 @@ void GameManager::Update()
 
 void GameManager::HandleInput()
 {
-    // Let paddle handle its own input
     paddle.HandleInput();
 
     // Handle game state input (space bar to start/pause)
@@ -165,6 +164,9 @@ void GameManager::HandleInput()
         if (!isGameStarted)
         {
             GameFirstStarts();
+        }
+        else if (isGameOver) {
+            Reset();
         }
         else
         {
@@ -236,6 +238,7 @@ void GameManager::Reset()
     ball.Reset();
     paddle.Reset();
     gameState.Reset();
+    InitializeBricks();
 
     isGameOver = false;
     isGamePaused = false;
