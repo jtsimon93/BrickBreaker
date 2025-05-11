@@ -243,6 +243,7 @@ void GameManager::DrawInfo() const
 void GameManager::Reset()
 {
     ball.Reset();
+    paddle.Reset();
     gameState.Reset();
 
     isGameOver = false;

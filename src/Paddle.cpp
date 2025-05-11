@@ -6,14 +6,7 @@ extern "C"
 
 Paddle::Paddle()
 {
-    // Default constructor
-    // Initialize default values
-    // Place paddle in the center bottom of the screen
-    position = {(float)(GetScreenWidth() / 2) - 50, (float)(GetScreenHeight() - 50)};
-    speed = {0.0f, 0.0f};
-    width = 100.0f;
-    height = 20.0f;
-    color = WHITE;
+    Reset();
 }
 
 Paddle::Paddle(Vector2 position, Vector2 speed, float width, float height, Color color)
@@ -103,4 +96,24 @@ void Paddle::HandleInput()
     {
         speed.x = 10.0f; // Move right
     }
+}
+
+void Paddle::Reset() {
+    SetPaddleInitialPosition();
+    SetPaddleInitialSpeed();
+    SetPaddleInitialProperties();
+}
+
+void Paddle::SetPaddleInitialPosition() {
+    position = {(float)(GetScreenWidth() / 2) - 50, (float)(GetScreenHeight() - 50)};
+}
+
+void Paddle::SetPaddleInitialSpeed() {
+    speed = {0.0f, 0.0f}; // No initial speed
+}
+
+void Paddle::SetPaddleInitialProperties() {
+    width = 100.0f;
+    height = 20.0f;
+    color = WHITE;
 }

@@ -14,6 +14,10 @@ private:
     float height;
     Color color;
 
+    void SetPaddleInitialPosition();
+    void SetPaddleInitialSpeed();
+    void SetPaddleInitialProperties();
+
 public:
     Paddle();
     Paddle(Vector2 position, Vector2 speed, float width, float height, Color color);
@@ -33,4 +37,5 @@ public:
     void HandleInput();
     void Update();
     void Draw() const;
+    void Reset();
 };
