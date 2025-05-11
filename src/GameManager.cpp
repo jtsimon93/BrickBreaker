@@ -1,16 +1,9 @@
 #include "GameManager.h"
 
 GameManager::GameManager()
-    : gameState(0, 3, 1, 0),
-      isGameOver(false),
-      isGamePaused(false),
-      isGameStarted(false),
-      isGameWon(false),
-      isGameReset(false)
+    : gameState(0, 3, 1, 0)
 {
-    // Set initial paddle speed TODO: check into this, could be handled in Paddle class?
-    paddle.SetSpeed({7.0f, 0.0f});
-    InitializeBricks();
+    Reset();
 }
 
 void GameManager::Draw() const
