@@ -7,13 +7,7 @@ extern "C"
 
 Ball::Ball()
 {
-    // Default constructor
-    // Just set the ball not moving and in the center of the screen
-    position.x = GetScreenWidth() / 2.0f;
-    position.y = GetScreenHeight() / 2.0f;
-    speed = {0.0f, 0.0f};
-    radius = 10.0f;
-    color = WHITE;
+    Reset();
 }
 
 Ball::Ball(Vector2 position, Vector2 speed, float radius, Color color)
@@ -144,13 +138,25 @@ void Ball::HandleCollision(const Rectangle &paddleRect)
 
 void Ball::Reset()
 {
+    SetBallInitialPosition();
+    SetBallInitialSpeed();
+    SetBallInitialProperties();
+}
+
+void Ball::SetBallInitialPosition() {
     // Reset ball position to the center of the screen
     position.x = GetScreenWidth() / 2.0f;
     position.y = GetScreenHeight() / 2.0f;
+}
 
-    // Reset speed to 0 (not moving)
+void Ball::SetBallInitialSpeed() {
+    // TODO: Randomly go left or right
+    // Move in an upward right direction
     speed = {5.0f, -5.0f};
+}
 
-    // Set the ball as not dead
+void Ball::SetBallInitialProperties() {
+    radius = 10.0f;
+    color = WHITE;
     died = false;
 }

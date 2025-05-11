@@ -13,6 +13,10 @@ private:
     Color color;
     bool died = false;
 
+    void SetBallInitialPosition();
+    void SetBallInitialSpeed();
+    void SetBallInitialProperties();
+
 public:
     Ball();
     Ball(Vector2 position, Vector2 speed, float radius, Color color);
