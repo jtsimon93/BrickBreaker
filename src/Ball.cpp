@@ -1,70 +1,59 @@
-extern "C"
-{
+extern "C" {
 #include "raylib.h"
 }
+
 #include "Ball.h"
 #include <cmath>
 
-Ball::Ball()
-{
+Ball::Ball() {
     Reset();
 }
 
 Ball::Ball(Vector2 position, Vector2 speed, float radius, Color color)
-    : position(position), speed(speed), radius(radius), color(color) {}
+    : position(position), speed(speed), radius(radius), color(color) {
+}
 
-void Ball::SetPosition(const Vector2 &newPosition)
-{
+void Ball::SetPosition(const Vector2 &newPosition) {
     position = newPosition;
 }
 
-void Ball::SetSpeed(const Vector2 &newSpeed)
-{
+void Ball::SetSpeed(const Vector2 &newSpeed) {
     speed = newSpeed;
 }
 
-void Ball::SetRadius(const float &newRadius)
-{
+void Ball::SetRadius(const float &newRadius) {
     radius = newRadius;
 }
 
-void Ball::SetColor(const Color &newColor)
-{
+void Ball::SetColor(const Color &newColor) {
     color = newColor;
 }
 
-void Ball::SetDied(bool newDied)
-{
+void Ball::SetDied(bool newDied) {
     died = newDied;
 }
 
-const Vector2 &Ball::GetPosition() const
-{
+const Vector2 &Ball::GetPosition() const {
     return position;
 }
 
-const Vector2 &Ball::GetSpeed() const
-{
+const Vector2 &Ball::GetSpeed() const {
     return speed;
 }
 
-float Ball::GetRadius() const
-{
+float Ball::GetRadius() const {
     return radius;
 }
 
-const Color &Ball::GetColor() const
-{
+const Color &Ball::GetColor() const {
     return color;
 }
 
-bool Ball::IsDied() const
-{
+bool Ball::IsDied() const {
     return died;
 }
 
-void Ball::Update()
-{
+void Ball::Update() {
     // Update position based on speed
     position.x += speed.x;
     position.y += speed.y;
@@ -74,54 +63,45 @@ void Ball::Update()
     bool collisionY = false;
 
     // Handle horizontal borders
-    if (position.x - radius < 0)
-    {
+    if (position.x - radius < 0) {
         position.x = radius; // Prevent going out of bounds
-        speed.x = -speed.x;  // Reverse horizontal direction
+        speed.x = -speed.x; // Reverse horizontal direction
         collisionX = true;
-    }
-    else if (position.x + radius > GetScreenWidth())
-    {
+    } else if (position.x + radius > GetScreenWidth()) {
         position.x = GetScreenWidth() - radius; // Prevent going out of bounds
-        speed.x = -speed.x;                     // Reverse horizontal direction
+        speed.x = -speed.x; // Reverse horizontal direction
         collisionX = true;
     }
 
     // Handle vertical borders (top only, bottom is game over)
-    if (position.y - radius < 0)
-    {
+    if (position.y - radius < 0) {
         position.y = radius; // Prevent going out of bounds
-        speed.y = -speed.y;  // Reverse vertical direction
+        speed.y = -speed.y; // Reverse vertical direction
         collisionY = true;
     }
 
     // Fix the "stuck in vertical motion" bug
     // If the ball is moving too vertically (very little horizontal movement)
     const float minHorizontalSpeed = 2.0f;
-    if (std::abs(speed.x) < minHorizontalSpeed)
-    {
+    if (std::abs(speed.x) < minHorizontalSpeed) {
         // Add some horizontal movement in the appropriate direction
         speed.x = (speed.x >= 0) ? minHorizontalSpeed : -minHorizontalSpeed;
     }
 
     // If the ball touches the bottom of the screen, set game over
-    if (position.y + radius > GetScreenHeight())
-    {
+    if (position.y + radius > GetScreenHeight()) {
         SetSpeed({0.0f, 0.0f}); // Stop the ball
-        SetDied(true);          // Mark the ball as dead
+        SetDied(true); // Mark the ball as dead
     }
 }
 
-void Ball::Draw() const
-{
+void Ball::Draw() const {
     DrawCircleV(position, radius, color);
 }
 
-void Ball::HandleCollision(const Rectangle &paddleRect)
-{
+void Ball::HandleCollision(const Rectangle &paddleRect) {
     // Check for collision with the paddle
-    if (CheckCollisionCircleRec(position, radius, paddleRect))
-    {
+    if (CheckCollisionCircleRec(position, radius, paddleRect)) {
         // Calculate the new speed based on the collision
         float paddleCenterX = paddleRect.x + paddleRect.width / 2.0f;
         float ballCenterX = position.x;
@@ -132,12 +112,11 @@ void Ball::HandleCollision(const Rectangle &paddleRect)
 
         // Set the new speed based on the angle of reflection
         speed.x = normalizedRelativeIntersectionX * 5.0f; // Adjust this value for speed
-        speed.y *= -1;                                    // Reverse vertical speed
+        speed.y *= -1; // Reverse vertical speed
     }
 }
 
-void Ball::Reset()
-{
+void Ball::Reset() {
     SetBallInitialPosition();
     SetBallInitialSpeed();
     SetBallInitialProperties();
