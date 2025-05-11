@@ -14,7 +14,6 @@ private:
     bool isGamePaused;
     bool isGameStarted;
     bool isGameWon;
-    bool isGameLost;
     bool isGameReset;
 
     Ball ball;
@@ -32,7 +31,6 @@ public:
     void SetIsGamePaused(bool newIsGamePaused);
     void SetIsGameStarted(bool newIsGameStarted);
     void SetIsGameWon(bool newIsGameWon);
-    void SetIsGameLost(bool newIsGameLost);
     void SetIsGameReset(bool newIsGameReset);
 
     const GameState &GetGameState() const;
@@ -40,7 +38,6 @@ public:
     bool GetIsGamePaused() const;
     bool GetIsGameStarted() const;
     bool GetIsGameWon() const;
-    bool GetIsGameLost() const;
     bool GetIsGameReset() const;
 
     void Draw() const;
