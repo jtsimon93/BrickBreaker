@@ -6,7 +6,6 @@ GameManager::GameManager()
       isGamePaused(false),
       isGameStarted(false),
       isGameWon(false),
-      isGameLost(false),
       isGameReset(false)
 {
     // Set initial paddle speed
@@ -68,10 +67,6 @@ void GameManager::SetIsGameWon(bool newIsGameWon)
     isGameWon = newIsGameWon;
 }
 
-void GameManager::SetIsGameLost(bool newIsGameLost)
-{
-    isGameLost = newIsGameLost;
-}
 
 void GameManager::SetIsGameReset(bool newIsGameReset)
 {
@@ -103,10 +98,6 @@ bool GameManager::GetIsGameWon() const
     return isGameWon;
 }
 
-bool GameManager::GetIsGameLost() const
-{
-    return isGameLost;
-}
 
 bool GameManager::GetIsGameReset() const
 {
@@ -250,7 +241,6 @@ void GameManager::Reset()
     isGamePaused = false;
     isGameStarted = false;
     isGameWon = false;
-    isGameLost = false;
     isGameReset = true;
 }
 
