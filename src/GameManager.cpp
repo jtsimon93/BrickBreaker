@@ -3,7 +3,13 @@
 GameManager::GameManager()
     : gameState(0, 3, 1, 0)
 {
+    LoadSounds();
     Reset();
+}
+
+GameManager::~GameManager()
+{
+    UnloadSound(brickHitSound);
 }
 
 void GameManager::Draw() const
@@ -104,10 +110,15 @@ void GameManager::Update()
         return;
     }
 
+    if (isGamePaused) {
+        PauseGameLoopSound();
+    }
+
     if (!isGamePaused && isGameStarted)
     {
         ball.Update();
         paddle.Update();
+        PlayGameLoopSound();
     }
 
     for (auto &brick : bricks)
@@ -121,6 +132,7 @@ void GameManager::Update()
             // Remove the brick from the vector
             brick = bricks.back();
             bricks.pop_back();
+            PlayBrickHitSound();
         }
     }
 
@@ -280,5 +292,31 @@ void GameManager::InitializeBricks()
 
             bricks.push_back(Brick(x, y, brickWidth, brickHeight, livesForRow, brickColor));
         }
+    }
+}
+
+void GameManager::LoadSounds() {
+    brickHitSound = {0};
+    gameLoopSound = {0};
+    brickHitSound = LoadSound("assets/sounds/brickbreak.mp3");
+    gameLoopSound = LoadSound("assets/sounds/gameloopsound.mp3");
+}
+
+void GameManager::PlayBrickHitSound() const {
+    if (IsAudioDeviceReady() && brickHitSound.frameCount > 0 && !IsSoundPlaying(brickHitSound) && IsSoundValid(brickHitSound)) {
+        PlaySound(brickHitSound);
+        SetSoundVolume(brickHitSound, 0.5f);
+    }
+}
+
+void GameManager::PlayGameLoopSound() const {
+    if (IsAudioDeviceReady() && gameLoopSound.frameCount > 0 && !IsSoundPlaying(gameLoopSound) && IsSoundValid(gameLoopSound)) {
+        PlaySound(gameLoopSound);
+    }
+}
+
+void GameManager::PauseGameLoopSound() const {
+    if (IsSoundPlaying(gameLoopSound)) {
+        PauseSound(gameLoopSound);
     }
 }

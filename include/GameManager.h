@@ -20,11 +20,18 @@ private:
     Paddle paddle;
     std::vector<Brick> bricks;
 
+    Sound brickHitSound;
+    Sound gameLoopSound;
+
     void InitializeBricks();
+    void LoadSounds();
+    void PlayBrickHitSound() const;
+    void PlayGameLoopSound() const;
+    void PauseGameLoopSound() const;
 
 public:
     GameManager();
-    ~GameManager() = default;
+    ~GameManager();
 
     void SetGameState(const GameState &newGameState);
     void SetIsGameOver(bool newIsGameOver);

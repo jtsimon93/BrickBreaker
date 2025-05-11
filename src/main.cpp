@@ -13,6 +13,7 @@ int main()
     constexpr int screenHeight = 640;
 
     InitWindow(screenWidth, screenHeight, "Brick Breaker");
+    InitAudioDevice();
     SetTargetFPS(60);
 
     auto gameManager = std::make_unique<GameManager>();
@@ -31,4 +32,6 @@ int main()
     }
 
     CloseWindow();
+    CloseAudioDevice();
+    return 0;
 }
